@@ -1,8 +1,8 @@
-#include "WindowUpdate.h"
+#include "Serial.h"
+#include <QString>
+#include <QStringList>
 
-using namespace System;
-
-HANDLE WindowUpdate::openSerial()
+HANDLE Serial::openSerial()
 {
 
 	//PortChat::Main();
@@ -59,7 +59,7 @@ HANDLE WindowUpdate::openSerial()
 	return m_hCommPort;
 }
 
-int WindowUpdate::getData(HANDLE port)
+int Serial::getData(HANDLE port)
 {
 	DWORD dwEvtMask;
 	DWORD bytesRead = 0;
@@ -77,7 +77,7 @@ int WindowUpdate::getData(HANDLE port)
 			//copy digits of the line into the buffer
 			memcpy(&lineBuffer[index], &buffer[bufIndex], sizeof(BYTE)*(i + 1 - bufIndex));
 			index += (i + 1 - bufIndex);
-			parseBuffer(lineBuffer, index);
+            parseBuffer(lineBuffer);
 			bufIndex = i + 1;
 			index = 0;
 			printf("X Angle: %.2f\tY Angle: %.2f\t Z Angle: %.2f\n", xangle, yangle, zangle);
@@ -91,21 +91,27 @@ int WindowUpdate::getData(HANDLE port)
 	return 0;
 }
 
-void WindowUpdate::parseBuffer(char * buffer, int length){
-	try {
-		String^ message = gcnew String(buffer);
-		String^ delimStr = ",\n";
-		array<Char>^ delimiter = delimStr->ToCharArray();
-		array<String^>^ strings = message->Split(delimiter);
-		xangle = Single::Parse(strings[0]);
-		yangle = Single::Parse(strings[1]);
-		zangle = Single::Parse(strings[2]);
+void Serial::parseBuffer(char * buffer){
+    try {
+        QString bufferTxt = buffer;
+        QStringList rows = bufferTxt.split(",\n");
+        QStringList columns;
+
+        foreach (QString row, rows){
+            columns += row.split(",");
+        }
+
+        xangle = columns.at(0).toInt();
+        yangle = columns.at(1).toInt();
+        zangle = columns.at(2).toInt();
 	}
-	catch (Exception ^) {
+    // Necessary for when the buffer does not line up perfectly on a full line, will create errors
+    // if not full line.
+    catch (...) {
 	}
 }
 
-void WindowUpdate::updateWindow(){
+void Serial::updateWindow(){
 	if (xangle > 25){
 		windowX += (int)(4 * PANRATE);
 	}
@@ -159,12 +165,12 @@ void WindowUpdate::updateWindow(){
 	}
 }
 
-int WindowUpdate::getx()
+int Serial::getx()
 {
 	return windowX;
 }
 
-int WindowUpdate::gety()
+int Serial::gety()
 {
 	return windowY;
 }

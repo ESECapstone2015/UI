@@ -13,10 +13,14 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void StartPolling();
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void onUpdatePosition(qint64 posx, qint64 posy);
 };
 
 #endif // MAINWINDOW_H

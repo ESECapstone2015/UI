@@ -17,6 +17,7 @@ SOURCES += main.cpp\
     Serial.cpp
 
 HEADERS  += mainwindow.h \
-    Serial.h
+    Serial.h \
+    pollingthread.h
 
 FORMS    += mainwindow.ui
