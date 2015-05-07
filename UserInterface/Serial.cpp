@@ -1,10 +1,14 @@
 #include "Serial.h"
 
+Serial::~Serial(){
+    CloseHandle(serialHandle);
+}
+
 HANDLE Serial::openSerial()
 {
 
 	//PortChat::Main();
-	HANDLE m_hCommPort = ::CreateFile((LPCWSTR)COMPORT,
+    HANDLE m_hCommPort = ::CreateFile(COMPORT,
 		GENERIC_READ,  // access ( read and write)
 		0,                           // (share) 0:cannot share the COM port
 		0,                           // security  (None)
@@ -52,7 +56,7 @@ HANDLE Serial::openSerial()
 
 	SetCommMask(m_hCommPort, EV_RXCHAR);
 
-	
+    serialHandle = m_hCommPort;
 
 	return m_hCommPort;
 }
@@ -69,7 +73,7 @@ int Serial::getData(HANDLE port)
 	int bufIndex = 0;
 
 	WaitCommEvent(port, &dwEvtMask, NULL);
-	ReadFile(port, &buffer, 30, &bytesRead, NULL);
+    ReadFile(port, &buffer, 30, &bytesRead, NULL);
 	for (int i = 0; i < bytesRead; i++){
 		if (buffer[i] == '\n'){ //we have polled a finished line
 			//copy digits of the line into the buffer
@@ -90,21 +94,31 @@ int Serial::getData(HANDLE port)
 }
 
 void Serial::parseBuffer(char * buffer){
-    try {
+    try {        
+        QByteArray ba;
+        const char *string;
+        int i = 0;
+        qDebug("Printing buffer to be parsed.");
+        qDebug(buffer);
         QString bufferTxt = buffer;
-        QStringList rows = bufferTxt.split(",\n");
-        QStringList columns;
+        QStringList rows = bufferTxt.split(",");
 
         foreach (QString row, rows){
-            columns += row.split(",");
+            ba = row.toLatin1();
+            string = ba.data();
+            qDebug(string);
+            if (i == 0){
+                xangle = atof(string);
+            }
+            else if (i == 1){
+                yangle = atof(string);
+            }
+            else if (i == 2){
+                zangle = atof(string);
+            }
+            i++;
         }
-
-        xangle = columns.at(0).toInt();
-        yangle = columns.at(1).toInt();
-        zangle = columns.at(2).toInt();
-	}
-    // Necessary for when the buffer does not line up perfectly on a full line, will create errors
-    // if not full line.
+    }
     catch (...) {
 	}
 }
@@ -148,15 +162,15 @@ void Serial::updateWindow(){
 		windowY -= (int)(1 * PANRATE);
 	}
 
-	if (windowX > WINXSIZE){
-		windowX = WINXSIZE;
+    if (windowX > (WINXSIZE*2)){
+        windowX = (WINXSIZE*2);
 	}
 	else if (windowX < 0){
 		windowX = 0;
 	}
 
-	if (windowY > WINYSIZE){
-		windowY = WINYSIZE;
+    if (windowY > (WINYSIZE*2)){
+        windowY = (WINYSIZE*2);
 	}
 	else if (windowY < 0){
 		windowY = 0;

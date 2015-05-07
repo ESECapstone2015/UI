@@ -10,7 +10,7 @@
 #include <QStringList>
 #include <QDebug>
 
-#define COMPORT "COM10"
+#define COMPORT L"COM10"
 #define PANRATE 1
 #define CNTR_INIT 500
 #define WINXSIZE 500
@@ -23,17 +23,18 @@ private:
 	int windowX = CNTR_INIT, windowY = CNTR_INIT;
 	int winxsize = WINXSIZE;
 	int winysize = WINYSIZE;
+        HANDLE serialHandle;
         void parseBuffer(char * buffer);
 	void updateWindow();
 
 
 public:
     Serial(){}
-    ~Serial(){}
-	int getData(HANDLE port);
-	HANDLE openSerial();
-	int getx();
-	int gety();
+    ~Serial();
+    int getData(HANDLE port);
+    HANDLE openSerial();
+    int getx();
+    int gety();
 };
 
 

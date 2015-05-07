@@ -17,8 +17,9 @@ void PollingThread::pollPort(){
     // Update position data.
     while (1){
         serialThread->getData(serialPort);
-        if (i == 1000 ){
+        if (i == 5){
             emit updatePosition(serialThread->getx(), serialThread->gety());
+            i=0;
         }
         i++;
     }
