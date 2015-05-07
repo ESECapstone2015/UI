@@ -21,6 +21,7 @@ private:
 
 public slots:
     void onUpdatePosition(qint64 posx, qint64 posy);
+    void debugBox(QString msg);
 };
 
 #endif // MAINWINDOW_H

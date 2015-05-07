@@ -3,6 +3,7 @@
 // Polls serial port for new position data, then updates dot on screen based on data.
 
 #include <QMessageBox>
+#include <QString>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "pollingthread.h"
@@ -12,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
 
 MainWindow::~MainWindow(){
@@ -20,18 +20,44 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::onUpdatePosition(qint64 posx, qint64 posy){
-    QMessageBox msgBox;
-    msgBox.setText("Position X:" + QString::number(posx)  + "Position Y:" + QString::number(posy));
     ui->dot->setGeometry(posx,posy,16,16);
+}
+
+void MainWindow::debugBox(QString msg){
+    QMessageBox msgBox;
+    msgBox.setText(msg);
+    msgBox.exec();
 }
 
 void MainWindow::StartPolling(){
     //Create worker thread.
-    PollingThread *workerThread = new PollingThread;
-    //Connect slots and signals to update dot position.
-    connect(workerThread, SIGNAL(PollingThread::updatePosition(qint64,qint64)),SLOT(onUpdatePosition(qint64,qint64)));
-    connect(workerThread, SIGNAL(finished()), workerThread, SLOT(deleteLater()));
+    QThread* thread = new QThread;
+    PollingThread* workerThread = new PollingThread ();
 
-    //Start new thread.
-    workerThread->start();
+    //Connect slots and signals to update dot position.
+    // Start polling after thread start.
+    connect(thread,
+            SIGNAL(started()),
+            workerThread,
+            SLOT(pollPort()));
+    // Update position form telemetry data.
+    connect(workerThread,
+            SIGNAL(updatePosition(qint64,qint64)),
+            this,
+            SLOT(onUpdatePosition(qint64,qint64)));
+    // Send debug message.
+    connect(workerThread,
+            SIGNAL(sendDebug(QString)),
+            this,
+            SLOT(debugBox(QString)));
+    // For Testing purposes, makes sure signals are firing.
+    /*connect(workerThread,
+            SIGNAL(sendDebug(QString)),
+            qApp,
+            SLOT(aboutQt()));*/
+    // Start new thread.
+
+    workerThread->moveToThread(thread);
+
+    thread->start();
 }

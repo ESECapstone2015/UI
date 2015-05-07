@@ -1,6 +1,4 @@
 #include "Serial.h"
-#include <QString>
-#include <QStringList>
 
 HANDLE Serial::openSerial()
 {
@@ -16,10 +14,10 @@ HANDLE Serial::openSerial()
 		);
 
 	if (m_hCommPort != INVALID_HANDLE_VALUE){
-		printf("Successfully opened %s\n", COMPORT);
+        qDebug("Successfully opened %s\n", COMPORT);
 	}
 	else {
-		printf("Error opening %s: error num : %d\n", COMPORT, GetLastError());
+        qDebug("Error opening %s: error num : %d\n", COMPORT, GetLastError());
 	}
 
 	DCB dcb = { 0 };
@@ -27,12 +25,12 @@ HANDLE Serial::openSerial()
 
 	if (!::GetCommState(m_hCommPort, &dcb))
 	{
-		printf("CSerialCommHelper : Failed to Get Comm State Reason: %d\n", GetLastError());
-		getchar();
+        qDebug("CSerialCommHelper : Failed to Get Comm State Reason: %d\n", GetLastError());
+        //getchar();
 		return NULL;
 	}
 
-	printf("Current Settings: \nBaud Rate %d;	Parity %d; Byte Size %d; Stop Bits %d\n", dcb.BaudRate, dcb.Parity, dcb.ByteSize, dcb.StopBits);
+    qDebug("Current Settings: \nBaud Rate %d;	Parity %d; Byte Size %d; Stop Bits %d\n", dcb.BaudRate, dcb.Parity, dcb.ByteSize, dcb.StopBits);
 
 	dcb.BaudRate = 115200;
 	dcb.ByteSize = 8;
@@ -42,11 +40,11 @@ HANDLE Serial::openSerial()
 
 	if (!::SetCommState(m_hCommPort, &dcb))
 	{
-		printf("CSerialCommHelper : Failed to Set Comm State Reason: %d\n", GetLastError());
-		getchar();
+        qDebug("CSerialCommHelper : Failed to Set Comm State Reason: %d\n", GetLastError());
+        //getchar();
 		return NULL;
 	}
-	printf("Current Settings: \nBaud Rate %d;	Parity %d; Byte Size %d; Stop Bits %d\n", dcb.BaudRate, dcb.Parity, dcb.ByteSize, dcb.StopBits);
+    qDebug("Current Settings: \nBaud Rate %d;	Parity %d; Byte Size %d; Stop Bits %d\n", dcb.BaudRate, dcb.Parity, dcb.ByteSize, dcb.StopBits);
 
 	OVERLAPPED ov;
 	memset(&ov, 0, sizeof(ov));
@@ -80,8 +78,8 @@ int Serial::getData(HANDLE port)
             parseBuffer(lineBuffer);
 			bufIndex = i + 1;
 			index = 0;
-			printf("X Angle: %.2f\tY Angle: %.2f\t Z Angle: %.2f\n", xangle, yangle, zangle);
-			printf("Window X: %d\t Window Y: %d\n", windowX, windowY);
+            qDebug("X Angle: %.2f\tY Angle: %.2f\t Z Angle: %.2f\n", xangle, yangle, zangle);
+            qDebug("Window X: %d\t Window Y: %d\n", windowX, windowY);
 			updateWindow();
 		}
 	}

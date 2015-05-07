@@ -6,6 +6,9 @@
 //** http://www.codeproject.com/Articles/9903/Calling-Managed-Code-from-Unmanaged-Code-and-vice
 #include <stdio.h>
 #include <Windows.h>
+#include <QString>
+#include <QStringList>
+#include <QDebug>
 
 #define COMPORT "COM10"
 #define PANRATE 1
