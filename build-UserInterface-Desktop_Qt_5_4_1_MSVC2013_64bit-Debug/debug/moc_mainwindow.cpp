@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[7];
-    char stringdata[52];
+    QByteArrayData data[10];
+    char stringdata[73];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,12 +34,16 @@ QT_MOC_LITERAL(1, 11, 16), // "onUpdatePosition"
 QT_MOC_LITERAL(2, 28, 0), // ""
 QT_MOC_LITERAL(3, 29, 4), // "posx"
 QT_MOC_LITERAL(4, 34, 4), // "posy"
-QT_MOC_LITERAL(5, 39, 8), // "debugBox"
-QT_MOC_LITERAL(6, 48, 3) // "msg"
+QT_MOC_LITERAL(5, 39, 6), // "anglex"
+QT_MOC_LITERAL(6, 46, 6), // "angley"
+QT_MOC_LITERAL(7, 53, 6), // "anglez"
+QT_MOC_LITERAL(8, 60, 8), // "debugBox"
+QT_MOC_LITERAL(9, 69, 3) // "msg"
 
     },
     "MainWindow\0onUpdatePosition\0\0posx\0"
-    "posy\0debugBox\0msg"
+    "posy\0anglex\0angley\0anglez\0debugBox\0"
+    "msg"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,12 +61,12 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    2,   24,    2, 0x0a /* Public */,
-       5,    1,   29,    2, 0x0a /* Public */,
+       1,    5,   24,    2, 0x0a /* Public */,
+       8,    1,   35,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong,    3,    4,
-    QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong,    3,    4,    5,    6,    7,
+    QMetaType::Void, QMetaType::QString,    9,
 
        0        // eod
 };
@@ -72,7 +76,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     if (_c == QMetaObject::InvokeMetaMethod) {
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->onUpdatePosition((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2]))); break;
+        case 0: _t->onUpdatePosition((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3])),(*reinterpret_cast< qint64(*)>(_a[4])),(*reinterpret_cast< qint64(*)>(_a[5]))); break;
         case 1: _t->debugBox((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }

@@ -20,7 +20,7 @@ private:
     Ui::MainWindow *ui;
 
 public slots:
-    void onUpdatePosition(qint64 posx, qint64 posy);
+    void onUpdatePosition(qint64 posx, qint64 posy, qint64 anglex, qint64 angley, qint64 anglez);
     void debugBox(QString msg);
 };
 

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PollingThread_t {
-    QByteArrayData data[8];
-    char stringdata[63];
+    QByteArrayData data[11];
+    char stringdata[84];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,13 +34,17 @@ QT_MOC_LITERAL(1, 14, 14), // "updatePosition"
 QT_MOC_LITERAL(2, 29, 0), // ""
 QT_MOC_LITERAL(3, 30, 4), // "posx"
 QT_MOC_LITERAL(4, 35, 4), // "posy"
-QT_MOC_LITERAL(5, 40, 9), // "sendDebug"
-QT_MOC_LITERAL(6, 50, 3), // "msg"
-QT_MOC_LITERAL(7, 54, 8) // "pollPort"
+QT_MOC_LITERAL(5, 40, 6), // "anglex"
+QT_MOC_LITERAL(6, 47, 6), // "angley"
+QT_MOC_LITERAL(7, 54, 6), // "anglez"
+QT_MOC_LITERAL(8, 61, 9), // "sendDebug"
+QT_MOC_LITERAL(9, 71, 3), // "msg"
+QT_MOC_LITERAL(10, 75, 8) // "pollPort"
 
     },
     "PollingThread\0updatePosition\0\0posx\0"
-    "posy\0sendDebug\0msg\0pollPort"
+    "posy\0anglex\0angley\0anglez\0sendDebug\0"
+    "msg\0pollPort"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,15 +62,15 @@ static const uint qt_meta_data_PollingThread[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   29,    2, 0x06 /* Public */,
-       5,    1,   34,    2, 0x06 /* Public */,
+       1,    5,   29,    2, 0x06 /* Public */,
+       8,    1,   40,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,   37,    2, 0x0a /* Public */,
+      10,    0,   43,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong,    3,    4,
-    QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong,    3,    4,    5,    6,    7,
+    QMetaType::Void, QMetaType::QString,    9,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,7 +83,7 @@ void PollingThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     if (_c == QMetaObject::InvokeMetaMethod) {
         PollingThread *_t = static_cast<PollingThread *>(_o);
         switch (_id) {
-        case 0: _t->updatePosition((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2]))); break;
+        case 0: _t->updatePosition((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3])),(*reinterpret_cast< qint64(*)>(_a[4])),(*reinterpret_cast< qint64(*)>(_a[5]))); break;
         case 1: _t->sendDebug((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 2: _t->pollPort(); break;
         default: ;
@@ -88,7 +92,7 @@ void PollingThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (PollingThread::*_t)(qint64 , qint64 );
+            typedef void (PollingThread::*_t)(qint64 , qint64 , qint64 , qint64 , qint64 );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&PollingThread::updatePosition)) {
                 *result = 0;
             }
@@ -139,9 +143,9 @@ int PollingThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void PollingThread::updatePosition(qint64 _t1, qint64 _t2)
+void PollingThread::updatePosition(qint64 _t1, qint64 _t2, qint64 _t3, qint64 _t4, qint64 _t5)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)), const_cast<void*>(reinterpret_cast<const void*>(&_t5)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

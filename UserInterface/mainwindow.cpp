@@ -19,8 +19,11 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-void MainWindow::onUpdatePosition(qint64 posx, qint64 posy){
-    ui->dot->setGeometry(posx,posy,16,16);
+void MainWindow::onUpdatePosition(qint64 posx, qint64 posy, qint64 anglex, qint64 angley, qint64 anglez){
+    ui->dot->setGeometry(posy,posx,16,16);
+    ui->Lbl_xangle->setText(QString::number(anglex));
+    ui->Lbl_yangle->setText(QString::number(angley));
+    ui->Lbl_zangle->setText(QString::number(anglez));
 }
 
 void MainWindow::debugBox(QString msg){
@@ -42,9 +45,9 @@ void MainWindow::StartPolling(){
             SLOT(pollPort()));
     // Update position form telemetry data.
     connect(workerThread,
-            SIGNAL(updatePosition(qint64,qint64)),
+            SIGNAL(updatePosition(qint64,qint64,qint64,qint64,qint64)),
             this,
-            SLOT(onUpdatePosition(qint64,qint64)));
+            SLOT(onUpdatePosition(qint64,qint64,qint64,qint64,qint64)));
     // Send debug message.
     connect(workerThread,
             SIGNAL(sendDebug(QString)),

@@ -78,7 +78,7 @@ int Serial::getData(HANDLE port)
 		if (buffer[i] == '\n'){ //we have polled a finished line
 			//copy digits of the line into the buffer
 			memcpy(&lineBuffer[index], &buffer[bufIndex], sizeof(BYTE)*(i + 1 - bufIndex));
-			index += (i + 1 - bufIndex);
+            index += (i + 1 - bufIndex);
             parseBuffer(lineBuffer);
 			bufIndex = i + 1;
 			index = 0;
@@ -98,25 +98,34 @@ void Serial::parseBuffer(char * buffer){
         QByteArray ba;
         const char *string;
         int i = 0;
-        qDebug("Printing buffer to be parsed.");
-        qDebug(buffer);
+        //qDebug("Printing buffer to be parsed.");
+        //qDebug(buffer);
         QString bufferTxt = buffer;
         QStringList rows = bufferTxt.split(",");
 
-        foreach (QString row, rows){
-            ba = row.toLatin1();
-            string = ba.data();
-            qDebug(string);
-            if (i == 0){
-                xangle = atof(string);
+        if (rows.length() == 3) {
+
+            foreach (QString row, rows){
+                ba = row.toLatin1();
+                string = ba.data();
+                qDebug(string);
+                if (i == 0){
+                    xangle = atof(string);
+                }
+                else if (i == 1){
+                    yangle = atof(string);
+                }
+                else if (i == 2){
+                    zangle = atof(string);
+                }
+                i++;
             }
-            else if (i == 1){
-                yangle = atof(string);
-            }
-            else if (i == 2){
-                zangle = atof(string);
-            }
-            i++;
+        } else{
+            xangle = 0;
+            yangle = 0;
+            zangle = 0;
+            windowX = CNTR_INIT;
+            windowY = CNTR_INIT;
         }
     }
     catch (...) {
@@ -124,53 +133,53 @@ void Serial::parseBuffer(char * buffer){
 }
 
 void Serial::updateWindow(){
-	if (xangle > 25){
-		windowX += (int)(4 * PANRATE);
+    if (xangle > FAST_THRESH){
+        windowX += (int)(4 * PANRATE);
 	}
-	else if (xangle > 15){
-		windowX += (int)(2 * PANRATE);
+    else if (xangle > MID_THRESH){
+        windowX += (int)(2 * PANRATE);
 	}
-	else if (xangle > 5){
-		windowX += (int)(1 * PANRATE);
+    else if (xangle > SLOW_THRESH){
+        windowX += (int)(1 * PANRATE);
 	}
-	else if (xangle < -25){
-		windowX -= (int)(4 * PANRATE);
+    else if (xangle < -FAST_THRESH){
+        windowX -= (int)(4 * PANRATE);
 	}
-	else if (xangle < -15){
-		windowX -= (int)(2 * PANRATE);
+    else if (xangle < -MID_THRESH){
+        windowX -= (int)(2 * PANRATE);
 	}
-	else if (xangle < -5){
-		windowX -= (int)(1 * PANRATE);
-	}
-
-	if (yangle > 25){
-		windowY += (int)(4 * PANRATE);
-	}
-	else if (yangle > 15){
-		windowY += (int)(2 * PANRATE);
-	}
-	else if (yangle > 5){
-		windowY += (int)(1 * PANRATE);;
-	}
-	else if (yangle < -25){
-		windowY -= (int)(4 * PANRATE);
-	}
-	else if (yangle < -15){
-		windowY -= (int)(2 * PANRATE);
-	}
-	else if (yangle < -5){
-		windowY -= (int)(1 * PANRATE);
+    else if (xangle < -SLOW_THRESH){
+        windowX -= (int)(1 * PANRATE);
 	}
 
-    if (windowX > (WINXSIZE*2)){
-        windowX = (WINXSIZE*2);
+    if (yangle > FAST_THRESH){
+        windowY -= (int)(4 * PANRATE);
+	}
+    else if (yangle > MID_THRESH){
+        windowY -= (int)(2 * PANRATE);
+	}
+    else if (yangle > SLOW_THRESH){
+        windowY -= (int)(1 * PANRATE);;
+	}
+    else if (yangle < -FAST_THRESH){
+        windowY += (int)(4 * PANRATE);
+	}
+    else if (yangle < -MID_THRESH){
+        windowY += (int)(2 * PANRATE);
+	}
+    else if (yangle < -SLOW_THRESH){
+        windowY += (int)(1 * PANRATE);
+	}
+
+    if (windowX > WINXSIZE){
+        windowX = WINXSIZE;
 	}
 	else if (windowX < 0){
 		windowX = 0;
 	}
 
-    if (windowY > (WINYSIZE*2)){
-        windowY = (WINYSIZE*2);
+    if (windowY > WINYSIZE){
+        windowY = WINYSIZE;
 	}
 	else if (windowY < 0){
 		windowY = 0;
@@ -185,4 +194,19 @@ int Serial::getx()
 int Serial::gety()
 {
 	return windowY;
+}
+
+int Serial::getxangle()
+{
+    return xangle;
+}
+
+int Serial::getyangle()
+{
+    return yangle;
+}
+
+int Serial::getzangle()
+{
+    return zangle;
 }
