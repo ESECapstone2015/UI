@@ -82,8 +82,8 @@ int Serial::getData(HANDLE port)
             parseBuffer(lineBuffer);
 			bufIndex = i + 1;
 			index = 0;
-            qDebug("X Angle: %.2f\tY Angle: %.2f\t Z Angle: %.2f\n", xangle, yangle, zangle);
-            qDebug("Window X: %d\t Window Y: %d\n", windowX, windowY);
+            //qDebug("X Angle: %.2f\tY Angle: %.2f\t Z Angle: %.2f\n", xangle, yangle, zangle);
+            //qDebug("Window X: %d\t Window Y: %d\n", windowX, windowY);
 			updateWindow();
 		}
 	}
@@ -108,7 +108,7 @@ void Serial::parseBuffer(char * buffer){
             foreach (QString row, rows){
                 ba = row.toLatin1();
                 string = ba.data();
-                qDebug(string);
+                //qDebug(string);
                 if (i == 0){
                     xangle = atof(string);
                 }

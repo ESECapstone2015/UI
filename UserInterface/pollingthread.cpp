@@ -7,13 +7,14 @@ void PollingThread::pollPort(){
 
     int i = 0;
 
-    /*
+
     if (serialPort != NULL){
-        emit sendDebug("Serial Port opened successfully.");
+        //emit sendDebug("Serial Port opened successfully.");
     }
     else {
-        emit sendDebug("Serial Port not opened, ERROR.");
-    }*/
+        //emit sendDebug("Serial Port not opened, ERROR.");
+        return;
+    }
 
     // Update position data.
     while (1){

@@ -62,5 +62,7 @@ void MainWindow::StartPolling(){
 
     workerThread->moveToThread(thread);
 
+    qDebug("Starting Thread");
+
     thread->start();
 }
