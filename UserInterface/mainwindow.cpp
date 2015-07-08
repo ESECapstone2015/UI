@@ -4,6 +4,7 @@
 
 #include <QMessageBox>
 #include <QString>
+#include <QFileInfo>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "pollingthread.h"
@@ -12,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    if (!image.load("C:\\test.jpg"))
+    {
+        qDebug("Error loading picture.");
+    }
     ui->setupUi(this);
 }
 
@@ -20,10 +25,12 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::onUpdatePosition(qint64 posx, qint64 posy, qint64 anglex, qint64 angley, qint64 anglez){
-    ui->dot->setGeometry(posy,posx,16,16);
+    ui->dot->setPixmap(QPixmap::fromImage(image.copy(posy, posx, posy + 640, posx + 480)));
     ui->Lbl_xangle->setText(QString::number(anglex));
     ui->Lbl_yangle->setText(QString::number(angley));
     ui->Lbl_zangle->setText(QString::number(anglez));
+    ui->Lbl_xpos->setText(QString::number(posx));
+    ui->Lbl_ypos->setText(QString::number(posy));
 }
 
 void MainWindow::debugBox(QString msg){

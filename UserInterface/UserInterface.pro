@@ -22,3 +22,6 @@ HEADERS  += mainwindow.h \
     pollingthread.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    uiresources.qrc

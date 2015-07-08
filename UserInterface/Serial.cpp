@@ -124,8 +124,8 @@ void Serial::parseBuffer(char * buffer){
             xangle = 0;
             yangle = 0;
             zangle = 0;
-            windowX = CNTR_INIT;
-            windowY = CNTR_INIT;
+            windowX = CNTR_INIT_X;
+            windowY = CNTR_INIT_Y;
         }
     }
     catch (...) {
