@@ -10,7 +10,7 @@
 #include <QStringList>
 #include <QDebug>
 
-#define COMPORT L"COM8"
+//#define COMPORT L"COM8"
 #define PANRATE 2
 #define PICYSIZE 3072
 #define PICXSIZE 1308
@@ -38,7 +38,7 @@ public:
     Serial(){}
     ~Serial();
     int getData(HANDLE port);
-    HANDLE openSerial();
+    HANDLE openSerial(LPCWSTR comPort);
     int getx();
     int gety();
     int getxangle();

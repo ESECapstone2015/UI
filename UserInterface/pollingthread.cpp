@@ -1,18 +1,17 @@
 #include "pollingthread.h"
 
-void PollingThread::pollPort(){
+void PollingThread::pollPort(QString comPort){
     // Open Serial port
     Serial * serialThread = new Serial();
-    HANDLE serialPort = serialThread->openSerial();
+    HANDLE serialPort = serialThread->openSerial((LPCWSTR)(comPort.toStdWString().c_str()));
 
     int i = 0;
 
-
     if (serialPort != NULL){
-        //emit sendDebug("Serial Port opened successfully.");
+        emit sendDebug("Serial Port opened successfully.");
     }
     else {
-        //emit sendDebug("Serial Port not opened, ERROR.");
+        emit sendDebug("Serial Port not opened, ERROR." + comPort);
         return;
     }
 

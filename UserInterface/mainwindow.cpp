@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QString>
 #include <QFileInfo>
+#include <QSignalMapper>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "pollingthread.h"
@@ -44,12 +45,24 @@ void MainWindow::StartPolling(){
     QThread* thread = new QThread;
     PollingThread* workerThread = new PollingThread ();
 
+    QSignalMapper * mapper = new QSignalMapper(this);
+
+    // Set up signal mapper to pass argument to new thread.
+    connect(mapper,
+            SIGNAL(mapped(QString)),
+            workerThread,
+            SLOT(pollPort(QString)));
+
+    mapper->setMapping(thread, comPort);
+
     //Connect slots and signals to update dot position.
     // Start polling after thread start.
     connect(thread,
             SIGNAL(started()),
-            workerThread,
-            SLOT(pollPort()));
+            mapper,
+            SLOT(map()));
+
+
     // Update position form telemetry data.
     connect(workerThread,
             SIGNAL(updatePosition(qint64,qint64,qint64,qint64,qint64)),
@@ -72,4 +85,60 @@ void MainWindow::StartPolling(){
     qDebug("Starting Thread");
 
     thread->start();
+}
+char * MainWindow::listCOM()
+{
+    char path[5000]; // buffer to store the path of the COMPORTS
+    //char name[7]; //Large enough for "COM100\0"
+    char list[256];	// Return list.
+    DWORD test;
+    bool gotPort = 0; // in case the port is not found
+
+/*
+    for (int i = 0; i < 255; i++) // checking ports from COM0 to COM255
+    {
+        sprintf_s(name, "COM%d", i);
+
+        test = QueryDosDevice((LPCWSTR)name, (LPWSTR) path, sizeof(path));
+
+        // Test the return value and error if any
+        if (test != 0) //QueryDosDevice returns zero if it didn't find an object
+        {
+            gotPort = TRUE;
+            list[i] = 1;
+            ui->comBx->addItem("COM" + i);
+        }
+        else
+        {
+            list[i] = 0;
+        }
+    }*/
+
+    test = QueryDosDevice(NULL, (LPWSTR) path, sizeof(path));
+
+    for (int i = 0; i < 255; i++)
+    {
+        // Test the return value and error if any
+        if (sscanf_s(path, "COM%d", i) == 1) //QueryDosDevice returns zero if it didn't find an object
+        {
+            gotPort = TRUE;
+            ui->comBx->addItem("COM" + i);
+        }
+    }
+
+
+    if (gotPort)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Found port");
+        msgBox.exec();
+        return list;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText(QString::fromUtf8(path));
+        msgBox.exec();
+        return NULL;
+    }
 }

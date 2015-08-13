@@ -163,6 +163,29 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comBx">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>490</y>
+      <width>69</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maxVisibleItems">
+     <number>15</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>Test1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Test2</string>
+     </property>
+    </item>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

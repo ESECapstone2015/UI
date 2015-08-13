@@ -1,0 +1,33 @@
+﻿Build started 8/3/2015 5:10:29 PM.
+     1>Project "G:\GIT\UI\UserInterface\UserInterface.vcxproj" on node 2 (Build target(s)).
+     1>CustomBuild:
+         MOC mainwindow.h
+         MOC pollingthread.h
+         UIC mainwindow.ui
+         RCC uiresources.qrc
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I. /IC:\Qt\Qt5.4.1\5.4\msvc2013_64\include /IC:\Qt\Qt5.4.1\5.4\msvc2013_64\include\QtWidgets /IC:\Qt\Qt5.4.1\5.4\msvc2013_64\include\QtGui /IC:\Qt\Qt5.4.1\5.4\msvc2013_64\include\QtANGLE /IC:\Qt\Qt5.4.1\5.4\msvc2013_64\include\QtCore /Idebug /I. /I"C:\Qt\Qt5.4.1\5.4\msvc2013_64\mkspecs\win32-msvc2013" /Zi /nologo /W3 /WX- /Od /D _WINDOWS /D UNICODE /D WIN32 /D WIN64 /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_CORE_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"debug\\" /Fd"debug\vc120.pdb" /Gd /TP /errorReport:prompt -Zm200 -w34100 -w34189 Serial.cpp main.cpp mainwindow.cpp pollingthread.cpp debug\moc_mainwindow.cpp debug\moc_pollingthread.cpp debug\qrc_uiresources.cpp
+         Serial.cpp
+     1>Serial.cpp(77): warning C4018: '<' : signed/unsigned mismatch
+         main.cpp
+         mainwindow.cpp
+     1>mainwindow.cpp(122): warning C4172: returning address of local variable or temporary
+         pollingthread.cpp
+         moc_mainwindow.cpp
+         moc_pollingthread.cpp
+         qrc_uiresources.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"debug\\UserInterface.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.4.1\5.4\msvc2013_64\lib C:\Qt\Qt5.4.1\5.4\msvc2013_64\lib\qtmaind.lib shell32.lib C:\Qt\Qt5.4.1\5.4\msvc2013_64\lib\Qt5Widgetsd.lib C:\Qt\Qt5.4.1\5.4\msvc2013_64\lib\Qt5Guid.lib C:\Qt\Qt5.4.1\5.4\msvc2013_64\lib\Qt5Cored.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"debug\UserInterface.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X64 "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" debug\Serial.obj
+         debug\main.obj
+         debug\mainwindow.obj
+         debug\pollingthread.obj
+         debug\moc_mainwindow.obj
+         debug\moc_pollingthread.obj
+         debug\qrc_uiresources.obj
+         UserInterface.vcxproj -> G:\GIT\UI\UserInterface\debug\UserInterface.exe
+     1>Done Building Project "G:\GIT\UI\UserInterface\UserInterface.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:01:21.35
